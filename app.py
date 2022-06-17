@@ -1,10 +1,12 @@
 """Flask app for adopt app."""
 
+from pkg_resources import add_activation_listener
 from flask import Flask, render_template
 
 from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Pet
+from forms import AddPetForm
 
 app = Flask(__name__)
 
@@ -31,5 +33,22 @@ def pets_list():
     return render_template('pet-list.html', pets=pets)
 
 
+
+@app.route('/add', methods=['GET',"POST"])
+def pets_add():
+    """ GET: Display add pet form
+        TODO:
+        POST: REcieve FOrm data and..."""
+
+    form = AddPetForm()
+
+    if form.validate_on_submit():
+        # TODO: POST Route
+        variable = 1
+
+    else:
+        return render_template(
+            # TODO: Link html template
+            "form-add-pet.html", form=form)
 
 
