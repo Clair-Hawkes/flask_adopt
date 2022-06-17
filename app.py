@@ -6,7 +6,7 @@ from flask import Flask, render_template, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Pet
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
 
@@ -37,7 +37,7 @@ def pets_list():
 @app.route('/add', methods=['GET',"POST"])
 def pets_add():
     """ GET: Display add pet form
-        POST: Receives form data, creates new pet and adds to database, 
+        POST: Receives form data, creates new pet and adds to database,
         redirects to home page"""
 
     form = AddPetForm()
@@ -50,8 +50,8 @@ def pets_add():
         notes = form.notes.data
 
         pet = Pet(
-            name=name, 
-            species=species, 
+            name=name,
+            species=species,
             photo_url=photo_url,
             age=age,
             notes=notes)
@@ -65,4 +65,34 @@ def pets_add():
         return render_template(
             "form-add-pet.html", form=form)
 
+# /[pet-id-number]
+
+@app.route('/<int:pet_id>', methods=['GET',"POST"])
+def pet_info_edit_form(pet_id):
+    """ GET: display pet info per pet and an edit form template
+    POST: Receives form data, edits a pet instance, commits to database,
+        and redirects to home page"""
+
+    # query on the PET class for the pet instance
+    # Make a new form
+    # return template, passing pet instance information
+
+    form = EditPetForm()
+
+    pet = Pet.query.get_or_404(pet_id)
+
+    if form.validate_on_submit():
+        #  name = form.pet_name.data
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
+
+        db.session.commit()
+
+        return redirect('/')
+
+    else:
+        return render_template(
+            "form-edit-pet.html",
+            form=form,pet=pet)
 
