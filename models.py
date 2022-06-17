@@ -18,22 +18,26 @@ class Pet(db.Model):
 
     __tablename__ = 'pets'
 
-    id = db.column(db.Integer,
+    id = db.Column(
+        db.Integer,
         primary_key=True,
-        autoincremement=True)
-    name = db.column(db.String(25),
+        autoincrement=True)
+    name = db.Column(db.String(25),
         nullable=False)
-    species = db.column(db.String(25),
+    species = db.Column(db.String(25),
         nullable=False)
-    photo_url = db.column(db.Text,
+    photo_url = db.Column(db.Text,
         nullable=False,
         default='')
-    age = db.column(db.String(10),
-        db.CheckConstraint("age in ['baby', 'young', 'adult', 'senior']"),
+    age = db.Column(db.String(10),
+        db.CheckConstraint("age in ('baby', 'young', 'adult', 'senior')"),
         nullable=False)
-    notes = db.column(db.Text,
+    notes = db.Column(db.Text,
         nullable=False,
         default='')
+    available = db.Column(db.Boolean,
+        nullable=False,
+        default=True)
 
 
 
