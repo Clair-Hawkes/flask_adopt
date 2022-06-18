@@ -70,9 +70,11 @@ def pet_edit(pet_id):
         POST: Receives form data, edits a pet instance, commits to database,
         and redirects to home page"""
 
-    form = EditPetForm()
 
     pet = Pet.query.get_or_404(pet_id)
+    form = EditPetForm(
+        available=pet.available,photo_url=pet.photo_url,notes=pet.notes)
+
 
     if form.validate_on_submit():
         pet.photo_url = form.photo_url.data
