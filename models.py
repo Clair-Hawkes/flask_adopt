@@ -22,19 +22,25 @@ class Pet(db.Model):
         db.Integer,
         primary_key=True,
         autoincrement=True)
+
     name = db.Column(db.String(25),
         nullable=False)
+
     species = db.Column(db.String(25),
         nullable=False)
+
     photo_url = db.Column(db.Text,
         nullable=False,
         default='')
+
     age = db.Column(db.String(10),
         db.CheckConstraint("age in ('baby', 'young', 'adult', 'senior')"),
         nullable=False)
+
     notes = db.Column(db.Text,
         nullable=False,
         default='')
+        
     available = db.Column(db.Boolean,
         nullable=False,
         default=True)

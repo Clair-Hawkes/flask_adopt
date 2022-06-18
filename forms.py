@@ -6,24 +6,28 @@ from wtforms.validators import InputRequired, Optional, URL, AnyOf
 
 
 class AddPetForm(FlaskForm):
-    """ Form for addsing pets """
+    """ Form for adding pets """
 
     pet_name = StringField("Pet Name: ",
       validators=[InputRequired()])
+
     species = StringField("Species: ",
       validators=[
         InputRequired(),
         AnyOf(
           ['dog','cat','porcupine'],
           message='Only dogs, cats, or porcupines allowed')])
+
     photo_url = StringField("Profile Pic: ",
       validators=[Optional(), URL(message="Must be valid url.")])
+
     age = SelectField("Age: ",
                       choices=[
                         ('baby', 'Baby'),
                         ('young', 'Young'),
                         ('adult', 'Adult'),
                         ('senior', 'Senior')])
+
     notes = StringField("Notes: ",
       validators=[Optional()])
 
@@ -33,10 +37,12 @@ class EditPetForm(FlaskForm):
 
     photo_url = StringField("Profile Pic: ",
         validators=[Optional(), URL(message="Must be valid url.")])
+
     notes = StringField("Notes: ",
       validators=[Optional()])
+
     #   TODO:Check defualt status, if required or optional, etc
-    available = BooleanField('Avaiable: ',)
+    available = BooleanField('Avaiable: ')
 
 
 

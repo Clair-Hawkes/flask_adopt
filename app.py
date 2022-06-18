@@ -33,9 +33,8 @@ def pets_list():
     return render_template('pet-list.html', pets=pets)
 
 
-
 @app.route('/add', methods=['GET',"POST"])
-def pets_add():
+def pet_add():
     """ GET: Display add pet form
         POST: Receives form data, creates new pet and adds to database,
         redirects to home page"""
@@ -65,24 +64,17 @@ def pets_add():
         return render_template(
             "form-add-pet.html", form=form)
 
-# /[pet-id-number]
-
 @app.route('/<int:pet_id>', methods=['GET',"POST"])
-def pet_info_edit_form(pet_id):
+def pet_edit(pet_id):
     """ GET: display pet info per pet and an edit form template
-    POST: Receives form data, edits a pet instance, commits to database,
+        POST: Receives form data, edits a pet instance, commits to database,
         and redirects to home page"""
-
-    # query on the PET class for the pet instance
-    # Make a new form
-    # return template, passing pet instance information
 
     form = EditPetForm()
 
     pet = Pet.query.get_or_404(pet_id)
 
     if form.validate_on_submit():
-        #  name = form.pet_name.data
         pet.photo_url = form.photo_url.data
         pet.notes = form.notes.data
         pet.available = form.available.data
